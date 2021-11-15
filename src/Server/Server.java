@@ -25,15 +25,19 @@ public class Server {
         ) {
             String inputLine, outputLine;
 
-            // Initiate conversation with client
-            outputLine = "x";
-            out.println(outputLine);
+            out.println(sendQuestion());
 
             while ((inputLine = in.readLine()) != null) {
+
                 outputLine = inputLine;
-                out.println(outputLine);
-                if (outputLine.equals("Bye."))
+                if (outputLine.equals("Bye.")){
                     break;
+                } else if (outputLine.equals("B")){
+                    out.println("Correct");
+                    out.println(sendQuestion());
+                } else{
+                    out.println("Incorrect");
+                }
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen "
@@ -47,4 +51,9 @@ public class Server {
         new Server();
     }
 
+    private String sendQuestion(){
+        String output;
+        output = "Where are tigers from? A: Africa B: Asia C: Europe D: South America";
+        return output;
+    }
 }
