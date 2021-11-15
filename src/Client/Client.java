@@ -5,34 +5,45 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-    String output = "Meddelande";
 
-    Client() throws IOException {
-        String hostName = "127.0.0.1";
-        int portNumber = 12345;
-
+    Client() {
+        String hostName = "127.0.0.1"; //localhost
+        int portNumber = 44444;
 
         try (
-                Socket adressSocket = new Socket(hostName, portNumber);
+                Socket kkSocket = new Socket(hostName, portNumber);
+                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(
-                        new InputStreamReader(adressSocket.getInputStream())
-                )
+                        new InputStreamReader(kkSocket.getInputStream()));
+                BufferedReader stdIn =
+                        new BufferedReader(new InputStreamReader(System.in))
         ) {
+
+
             String fromServer;
+            String fromUser;
 
             while ((fromServer = in.readLine()) != null) {
-                System.out.println("Server : " + fromServer);
+                System.out.println("Server: " + fromServer);
+                if (fromServer.equals("Bye."))
+                    break;
+
+                fromUser = stdIn.readLine();
+                if (fromUser != null) {
+                    //System.out.println("Client: " + fromUser);
+                    out.println(fromUser);
+                }
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);
         } catch (IOException e) {
-            System.err.println("Couldnt get I/O for the connection to " +
+            System.err.println("Couldn't get I/O for the connection to " +
                     hostName);
             System.exit(1);
         }
     }
-    public static void main(String[] args) throws IOException {
-        Client c = new Client();
+    public static void main(String[] args) {
+        new Client();
     }
 }
