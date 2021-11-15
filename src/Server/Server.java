@@ -25,7 +25,6 @@ public class Server {
         ) {
             String inputLine, outputLine;
 
-            // Initiate conversation with client
             outputLine = "x";
             out.println(outputLine);
 
@@ -46,5 +45,4 @@ public class Server {
     public static void main(String[] args) {
         new Server();
     }
-
 }

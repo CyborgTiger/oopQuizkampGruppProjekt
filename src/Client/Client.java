@@ -7,7 +7,7 @@ import java.net.UnknownHostException;
 public class Client {
 
     Client() {
-        String hostName = "127.0.0.1"; //localhost
+        String hostName = "127.0.0.1";
         int portNumber = 44444;
 
         try (
@@ -30,7 +30,6 @@ public class Client {
 
                 fromUser = stdIn.readLine();
                 if (fromUser != null) {
-                    //System.out.println("Client: " + fromUser);
                     out.println(fromUser);
                 }
             }
