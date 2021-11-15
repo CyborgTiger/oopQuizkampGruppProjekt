@@ -8,7 +8,7 @@ public class Client {
 
     Client() {
         String hostName = "127.0.0.1"; //localhost
-        int portNumber = 44444;
+        int portNumber = 44445;
 
         try (
                 Socket kkSocket = new Socket(hostName, portNumber);
