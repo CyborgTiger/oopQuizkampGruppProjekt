@@ -24,9 +24,10 @@ public class Client {
             String fromUser;
 
             while ((fromServer = serverIn.readLine()) != null) {
-                String question = "Where are tigers from? A: Africa B: Asia C: Europe D: South America";
+                String correct = "Correct";
+                String incorrect = "Incorrect";
                 System.out.println("Server: " + fromServer);
-                if (!fromServer.equals(question)){
+                if (fromServer.equals(correct) || fromServer.equals(incorrect)){
                     toServer.println("");
                     continue;
                 }
