@@ -1,81 +1,83 @@
-package Client;
-
 import javax.swing.*;
-import javax.swing.border.Border;
+import javax.xml.stream.events.StartElement;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class StartMenuDesign extends JFrame {
 
+    // top panel
     JPanel top = new JPanel();
-    JPanel userInfo= new JPanel();
-    JPanel savedUserInfo = new JPanel();
-    JPanel saveButton = new JPanel();
-    JPanel newGame = new JPanel();
+    JPanel topRight = new JPanel();
+    JPanel topLeft = new JPanel();
+    JPanel insideTopLeft = new JPanel();
+
+    JLabel userName = new JLabel("Username: ");
+    JButton saveUserInputButton = new JButton("Save");
+    JTextArea userNameInput = new JTextArea();
+
+    // Center panel
+    JPanel center = new JPanel();
+    JPanel topCenter = new JPanel();
+    JPanel bottomCenter = new JPanel();
+    JLabel welcomeMessage = new JLabel("               ");
+    String s = "";
+    JButton newGameButton = new JButton("Starta nytt spel");
+
+    // Bottom Panel
     JPanel bottom = new JPanel();
+    JButton homeButton = new JButton("Hem");
+    JButton statisticsButton = new JButton("Statistik");
+    JButton matchHistoryButton = new JButton("Visa historik");
+    JButton exitButton = new JButton("Exit");
 
-    JButton play = new JButton("Starta nytt spel");
-    JButton button2 = new JButton("button 2");
-    JButton button3 = new JButton("button 3");
-    JButton button4 = new JButton("button 4");
-    JButton saveNameButton = new JButton("Spara");
-
-    JLabel username = new JLabel("USERNAME: ");
-    JTextArea inputTxt = new JTextArea();
-
-    JButton homebutton = new JButton("Hem");
-
-    Border border = BorderFactory.createLineBorder(Color.BLACK, 2);
 
     StartMenuDesign() {
 
-        //top
-        top.setLayout(new GridLayout(1,2));
 
-        userInfo.setBackground(Color.pink);
-        userInfo.add(username);
-        userInfo.add(inputTxt);
-        userInfo.setBorder(border);
+        //Top panel properties
+        add(top, BorderLayout.NORTH);
+        top.setLayout(new GridLayout(1, 2));
 
-        saveButton.setLayout(new GridLayout(1,2));
-        top.add(userInfo);
-        top.add(saveButton);
-        saveButton.add(saveNameButton);
+        top.add(topLeft);
+        top.add(topRight);
 
+        topLeft.setLayout(new GridLayout(1, 2));
+        topLeft.add(userName);
+        topLeft.add(userNameInput);
+        userNameInput.setBackground(Color.pink);
+        userNameInput.setFont(new Font("Serif", Font.BOLD, 25));
 
-        //Center
+        topRight.add(saveUserInputButton);
+        saveUserInputButton.addMouseListener(buttonClick);
 
-        //South
+        // Center panel properties
+        add(center, BorderLayout.CENTER);
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        userInfo.setLayout(new GridLayout(1,3));
-        savedUserInfo.setLayout(new GridLayout(1,2));
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        center.add(topCenter, gbc);
 
-        setLayout(new FlowLayout());
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        center.add(bottomCenter, gbc);
 
-        play.setFont(new Font("Serif", Font.BOLD, 17));
-        play.setForeground(Color.BLACK);
-        play.setBorder(border);
-        play.setPreferredSize(new Dimension(480, 30));
-        play.setBackground(Color.green);
+        topCenter.add(welcomeMessage);
+        welcomeMessage.setBackground(Color.ORANGE);
 
-        inputTxt.setBackground(Color.pink);
-        inputTxt.setFont(new Font("Serif", Font.BOLD, 17));
+        bottomCenter.add(newGameButton);
+        newGameButton.setPreferredSize(new Dimension(450, 30));
 
-        newGame.setBackground(Color.pink);
+        // Bottom panel properties
+        add(bottom, BorderLayout.SOUTH);
+        bottom.setLayout(new FlowLayout());
 
-
-        
-        bottom.add(homebutton);
-        bottom.add(button2);
-        bottom.add(button3);
-        bottom.add(button4);
-        bottom.setBorder(border);
-
-        add(userInfo);
-        add(newGame);
-        add(bottom);
-
-        newGame.add(play);
-
+        bottom.add(homeButton);
+        bottom.add(statisticsButton);
+        bottom.add(matchHistoryButton);
+        bottom.add(exitButton);
 
         //JFrame properties
         setTitle("Quizkampen");
@@ -83,8 +85,30 @@ public class StartMenuDesign extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        setLayout(new BorderLayout());
     }
+
+    MouseAdapter buttonClick = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) throws ClassCastException {
+
+            Object src = e.getSource();
+            int clicked = 0;
+            int empty = 0;
+            String sClicked = "";
+            String sEmpty = "";
+
+            if (src == saveUserInputButton) {
+                s = userNameInput.getText();
+                welcomeMessage.setText("Välkommen " + s);
+
+
+            }
+
+
+        }
+
+    };
 
 
     public static void main(String[] args) {
