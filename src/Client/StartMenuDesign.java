@@ -93,10 +93,7 @@ public class StartMenuDesign extends JFrame {
         public void mouseClicked(MouseEvent e) throws ClassCastException {
 
             Object src = e.getSource();
-            int clicked = 0;
-            int empty = 0;
-            String sClicked = "";
-            String sEmpty = "";
+           
 
             if (src == saveUserInputButton) {
                 s = userNameInput.getText();
