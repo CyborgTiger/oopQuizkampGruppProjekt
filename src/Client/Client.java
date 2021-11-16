@@ -7,8 +7,8 @@ import java.net.UnknownHostException;
 public class Client {
 
     Client() {
-        String hostName = "127.0.0.1";
-        int portNumber = 44444;
+        String hostName = "127.0.0.1"; //localhost
+        int portNumber = 44445;
 
         try (
                 Socket kkSocket = new Socket(hostName, portNumber);
@@ -30,6 +30,7 @@ public class Client {
 
                 fromUser = stdIn.readLine();
                 if (fromUser != null) {
+                    //System.out.println("Client: " + fromUser);
                     out.println(fromUser);
                 }
             }
