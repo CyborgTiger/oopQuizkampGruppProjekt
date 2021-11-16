@@ -18,21 +18,23 @@ public class Server {
         try (
                 ServerSocket serverSocket = new ServerSocket(portNumber);
                 Socket clientSocket = serverSocket.accept();
-                PrintWriter out =
+                PrintWriter toClient =
                         new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
+                BufferedReader fromClient = new BufferedReader(
                         new InputStreamReader(clientSocket.getInputStream()))
         ) {
-            String inputLine, outputLine;
+            String inputLine;
 
-            outputLine = "x";
-            out.println(outputLine);
+            toClient.println(sendQuestion());
 
-            while ((inputLine = in.readLine()) != null) {
-                outputLine = inputLine;
-                out.println(outputLine);
-                if (outputLine.equals("Bye."))
+            while ((inputLine = fromClient.readLine()) != null) {
+
+                if (inputLine.equals("Bye.")){
                     break;
+                } else if (!inputLine.equals("")){
+                    toClient.println(checkAnswer(inputLine));
+                    toClient.println(sendQuestion());
+                }
             }
         } catch (IOException e) {
             System.out.println("Exception caught when trying to listen "
@@ -44,5 +46,20 @@ public class Server {
 
     public static void main(String[] args) {
         new Server();
+    }
+
+    private String sendQuestion(){
+        String output;
+        output = "Where are tigers from? A: Africa B: Asia C: Europe D: South America";
+        return output;
+    }
+
+    private String checkAnswer(String answer){
+        String correctAnswer = "B";
+        if (answer.equals(correctAnswer)){
+            return "Correct";
+        } else{
+            return "Incorrect";
+        }
     }
 }
