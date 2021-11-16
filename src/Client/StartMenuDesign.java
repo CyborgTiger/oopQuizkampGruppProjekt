@@ -34,7 +34,6 @@ public class StartMenuDesign extends JFrame {
 
     StartMenuDesign() {
 
-
         //Top panel properties
         add(top, BorderLayout.NORTH);
         top.setLayout(new GridLayout(1, 2));
