@@ -7,15 +7,15 @@ import java.net.UnknownHostException;
 public class Client {
 
     Client() {
-        String hostName = "127.0.0.1"; //localhost
+        String hostName = "127.0.0.1";
         int portNumber = 44444;
 
         try (
-                Socket kkSocket = new Socket(hostName, portNumber);
-                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(kkSocket.getInputStream()));
-                BufferedReader stdIn =
+                Socket Socket = new Socket(hostName, portNumber);
+                PrintWriter toServer = new PrintWriter(Socket.getOutputStream(), true);
+                BufferedReader serverIn = new BufferedReader(
+                        new InputStreamReader(Socket.getInputStream()));
+                BufferedReader clientInput =
                         new BufferedReader(new InputStreamReader(System.in))
         ) {
 
@@ -23,15 +23,17 @@ public class Client {
             String fromServer;
             String fromUser;
 
-            while ((fromServer = in.readLine()) != null) {
+            while ((fromServer = serverIn.readLine()) != null) {
+                String correct = "Correct";
+                String incorrect = "Incorrect";
                 System.out.println("Server: " + fromServer);
-                if (fromServer.equals("Bye."))
-                    break;
-
-                fromUser = stdIn.readLine();
+                if (fromServer.equals(correct) || fromServer.equals(incorrect)){
+                    toServer.println("");
+                    continue;
+                }
+                fromUser = clientInput.readLine();
                 if (fromUser != null) {
-                    //System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
+                    toServer.println(fromUser);
                 }
             }
         } catch (UnknownHostException e) {
