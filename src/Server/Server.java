@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class Server {
 
@@ -47,15 +48,19 @@ public class Server {
     public static void main(String[] args) {
         new Server();
     }
+        QuizQuestions quizQuestions = new QuizQuestions();
 
     private String sendQuestion(){
-        String output;
-        output = "Where are tigers from? A: Africa B: Asia C: Europe D: South America";
-        return output;
+
+        QuizQuestion quizQuestion = quizQuestions.getQuizQuestions().get(0);
+        String question = quizQuestion.getQuestion();
+        String[] answers = quizQuestion.getAnswers();
+        String answersString = Arrays.toString(answers);
+        return question + " " + answersString;
     }
 
     private String checkAnswer(String answer){
-        String correctAnswer = "B";
+       String correctAnswer = quizQuestions.getQuizQuestions().get(0).getCorrectAnswer();
         if (answer.equals(correctAnswer)){
             return "Correct";
         } else{

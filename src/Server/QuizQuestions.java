@@ -19,13 +19,13 @@ import java.util.List;
 
             String question = "What is the origin of the Olympic Games?";
             String[] answers1 = {"Scandinavia", "Greece", "China", "Egypt"};
-            QuizQuestion quizQuestion = new QuizQuestion(question, 2, answers1);
-            this.quizQuestions.add(quizQuestion);
+            QuizQuestion quizQuestion = new QuizQuestion(question, 1, answers1);
+            quizQuestions.add(quizQuestion);
 
             question = "what's the capital of maldives?";
             String[] answers2 = {"Malé", "Bali", "jakarta", "Abu Dhabi"};
-            quizQuestion = new QuizQuestion(question, 1, answers2);
-            this.quizQuestions.add(quizQuestion);
+            quizQuestion = new QuizQuestion(question, 0, answers2);
+            quizQuestions.add(quizQuestion);
 
             // Add the remainder of the questions and answers here
 
