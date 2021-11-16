@@ -18,25 +18,22 @@ public class Server {
         try (
                 ServerSocket serverSocket = new ServerSocket(portNumber);
                 Socket clientSocket = serverSocket.accept();
-                PrintWriter out =
+                PrintWriter toClient =
                         new PrintWriter(clientSocket.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(
+                BufferedReader fromClient = new BufferedReader(
                         new InputStreamReader(clientSocket.getInputStream()))
         ) {
-            String inputLine, outputLine;
+            String inputLine;
 
-            out.println(sendQuestion());
+            toClient.println(sendQuestion());
 
-            while ((inputLine = in.readLine()) != null) {
+            while ((inputLine = fromClient.readLine()) != null) {
 
-                outputLine = inputLine;
-                if (outputLine.equals("Bye.")){
+                if (inputLine.equals("Bye.")){
                     break;
-                } else if (outputLine.equals("B")){
-                    out.println("Correct");
-                    out.println(sendQuestion());
-                } else{
-                    out.println("Incorrect");
+                } else if (!inputLine.equals("")){
+                    toClient.println(checkAnswer(inputLine));
+                    toClient.println(sendQuestion());
                 }
             }
         } catch (IOException e) {
@@ -55,5 +52,14 @@ public class Server {
         String output;
         output = "Where are tigers from? A: Africa B: Asia C: Europe D: South America";
         return output;
+    }
+
+    private String checkAnswer(String answer){
+        String correctAnswer = "B";
+        if (answer.equals(correctAnswer)){
+            return "Correct";
+        } else{
+            return "Incorrect";
+        }
     }
 }
