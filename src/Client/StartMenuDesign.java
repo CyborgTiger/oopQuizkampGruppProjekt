@@ -1,3 +1,5 @@
+package Client;
+
 import javax.swing.*;
 import javax.xml.stream.events.StartElement;
 import java.awt.*;
