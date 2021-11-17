@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameGUI extends Base implements ActionListener {
+public class GameGUI extends JPanel implements ActionListener {
 
     JPanel questionPanel = new JPanel();
     JPanel optionPanel = new JPanel();
@@ -19,10 +19,7 @@ public class GameGUI extends Base implements ActionListener {
 
         setVisible(true);
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(Base.EXIT_ON_CLOSE);
-        setResizable(false);
-        setTitle("KampQuizen");
-        setSize(700,800);
+        setSize(500,500);
         add(questionPanel, BorderLayout.NORTH);
         //questionPanel.setPreferredSize(new Dimension(300,300));
         optionPanel.setPreferredSize(new Dimension(600,400));
@@ -33,8 +30,6 @@ public class GameGUI extends Base implements ActionListener {
         questionPanel.add(questionLabel, BorderLayout.SOUTH);
 
         addOptions();
-
-        pack();
     }
 
     public void createButtons() {
@@ -57,6 +52,10 @@ public class GameGUI extends Base implements ActionListener {
         optionThree.addActionListener(this);
         optionFour.addActionListener(this);
 
+    }
+
+    public static void main(String[] args) {
+        new GameGUI();
     }
 
 

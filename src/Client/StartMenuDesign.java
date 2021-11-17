@@ -4,11 +4,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 
 import static java.lang.Boolean.TRUE;
 
 public class StartMenuDesign extends JPanel{
+
+    public boolean shouldShowGame = false;
 
     // top panel
     JPanel top = new JPanel();
@@ -37,7 +40,8 @@ public class StartMenuDesign extends JPanel{
 
     int clicked = 0;
 
-    StartMenuDesign() {
+    public StartMenuDesign(MouseListener listener) {
+        newGameButton.addMouseListener(listener);
 
         //Base Panel properties
         setSize(500, 500);
@@ -161,7 +165,10 @@ public class StartMenuDesign extends JPanel{
                 }
             }
             if (src == newGameButton) {
+                shouldShowGame = true;
                 GameGUI gg = new GameGUI();
+                add(gg);
+                gg.setVisible(true);
                 setVisible(false);
             }
 
@@ -188,7 +195,7 @@ public class StartMenuDesign extends JPanel{
     };
 
     public static void main(String[] args) throws IOException {
-        new StartMenuDesign();
+        //new StartMenuDesign();
     }
 
 }
