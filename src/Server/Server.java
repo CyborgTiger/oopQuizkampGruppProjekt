@@ -13,6 +13,7 @@ public class Server {
 
 
     public Server() {
+        System.out.println("Server init!");
 
         int portNumber = 44444;
 
@@ -24,17 +25,31 @@ public class Server {
                 BufferedReader fromClient = new BufferedReader(
                         new InputStreamReader(clientSocket.getInputStream()))
         ) {
+            System.out.println("Client connected!");
+
             String inputLine;
 
-            toClient.println(sendQuestion());
+            toClient.println("welcome");
 
-            while ((inputLine = fromClient.readLine()) != null) {
+            while (true) {
+                inputLine = fromClient.readLine();
+                if( inputLine != null) {
 
-                if (inputLine.equals("Bye.")){
-                    break;
-                } else if (!inputLine.equals("")){
-                    toClient.println(checkAnswer(inputLine));
-                    toClient.println(sendQuestion());
+                    int questionNo = 0;
+                    System.out.println(inputLine);
+                    if ("requestQuestion".equals(inputLine)) {
+                        System.out.println("sending question");
+
+                        toClient.println(sendQuestion(questionNo));
+
+                    }  else  {
+                        System.out.println("check answer: " + inputLine + " length:" + inputLine.length());
+
+                        toClient.println(checkAnswer(questionNo, Integer.parseInt(inputLine.trim())));
+
+                        questionNo ++;
+
+                    }
                 }
             }
         } catch (IOException e) {
@@ -48,20 +63,21 @@ public class Server {
     public static void main(String[] args) {
         new Server();
     }
-        QuizQuestions quizQuestions = new QuizQuestions();
+    QuizQuestions quizQuestions = new QuizQuestions();
 
-    private String sendQuestion(){
+    private String sendQuestion(int questionNr){
 
-        QuizQuestion quizQuestion = quizQuestions.getQuizQuestions().get(0);
+        QuizQuestion quizQuestion = quizQuestions.getQuizQuestions().get(questionNr);
         String question = quizQuestion.getQuestion();
         String[] answers = quizQuestion.getAnswers();
         String answersString = Arrays.toString(answers);
         return question + " " + answersString;
+
     }
 
-    private String checkAnswer(String answer){
-       String correctAnswer = quizQuestions.getQuizQuestions().get(0).getCorrectAnswer();
-        if (answer.equals(correctAnswer)){
+    private String checkAnswer(int questionNr, int answer){
+       int correctAnswer = quizQuestions.getQuizQuestions().get(questionNr).getCorrectAnswerIndex();
+        if (answer == correctAnswer){
             return "Correct";
         } else{
             return "Incorrect";

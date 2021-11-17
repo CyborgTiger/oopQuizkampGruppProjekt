@@ -11,8 +11,12 @@ import java.util.List;
         }
 
         public List<QuizQuestion> getQuizQuestions() {
+//            public List<QuizQuestion> getQuizQuestions(Catagory cat)agory {
+//                return quizQuestions.stream().filter(quizQuestion -> quizQuestion.getCatagory == cat);
             return quizQuestions;
         }
+
+
 
         private List<QuizQuestion> addQuizQuestions() {
             List<QuizQuestion> quizQuestions = new ArrayList<>();

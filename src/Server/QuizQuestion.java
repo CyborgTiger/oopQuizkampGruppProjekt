@@ -4,6 +4,8 @@ public class QuizQuestion {
     private final int correctAnswerIndex;
 
     private final String question;
+    //TODO add catagory
+
 
     private final String[] answers;
 
@@ -22,7 +24,7 @@ public class QuizQuestion {
         return question;
     }
 
-    public String getCorrectAnswer() {
-        return answers[correctAnswerIndex];
+    public int getCorrectAnswerIndex() {
+        return correctAnswerIndex;
     }
 }
