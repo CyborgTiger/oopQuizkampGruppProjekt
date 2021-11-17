@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameGUI extends JFrame implements ActionListener {
+public class GameGUI extends Base implements ActionListener {
 
     JPanel questionPanel = new JPanel();
     JPanel optionPanel = new JPanel();
@@ -19,7 +19,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
         setVisible(true);
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(Base.EXIT_ON_CLOSE);
         setResizable(false);
         setTitle("KampQuizen");
         setSize(700,800);

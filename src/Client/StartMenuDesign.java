@@ -1,19 +1,14 @@
 package Client;
 
 import javax.swing.*;
-import javax.xml.stream.events.StartElement;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
 
 import static java.lang.Boolean.TRUE;
 
-public class StartMenuDesign extends JFrame {
-
+public class StartMenuDesign extends JPanel{
 
     // top panel
     JPanel top = new JPanel();
@@ -40,7 +35,14 @@ public class StartMenuDesign extends JFrame {
     JButton changeColourButton = new JButton("Byt färg");
     JButton exitButton = new JButton("Exit");
 
+    int clicked = 0;
+
     StartMenuDesign() {
+
+        //Base Panel properties
+        setSize(500, 500);
+        setVisible(true);
+        setLayout(new BorderLayout());
 
         //Top panel properties
         add(top, BorderLayout.NORTH);
@@ -80,7 +82,7 @@ public class StartMenuDesign extends JFrame {
         center.add(bottomCenter, gbc);
 
         topCenter.add(welcomeMessage);
-        welcomeMessage.setBackground(Color.ORANGE);
+        welcomeMessage.setBackground(Color.WHITE);
 
         bottomCenter.add(newGameButton);
         newGameButton.setPreferredSize(new Dimension(450, 30));
@@ -96,12 +98,7 @@ public class StartMenuDesign extends JFrame {
         bottom.add(exitButton);
 
         //JFrame properties
-        setTitle("Quizkampen");
-        setSize(500, 500);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+
     }
 
     MouseAdapter buttonClick = new MouseAdapter() {
@@ -109,7 +106,6 @@ public class StartMenuDesign extends JFrame {
         public void mouseClicked(MouseEvent e) throws ClassCastException {
 
             Object src = e.getSource();
-            int clicked = 0;
             String s;
             int line = 0;
 
@@ -178,7 +174,7 @@ public class StartMenuDesign extends JFrame {
                     center.setBackground(Color.green);
                 }
                 else if(clicked==3){
-                    center.setBackground(Color.blue);
+                    center.setBackground(Color.cyan);
                 }
                 else if (clicked==4){
                     center.setBackground(Color.pink);
