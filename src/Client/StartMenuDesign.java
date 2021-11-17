@@ -37,7 +37,7 @@ public class StartMenuDesign extends JFrame {
     JPanel bottom = new JPanel();
     JButton homeButton = new JButton("Hem");
     JButton statisticsButton = new JButton("Statistik");
-    JButton matchHistoryButton = new JButton("Visa historik");
+    JButton changeColourButton = new JButton("Byt färg");
     JButton exitButton = new JButton("Exit");
 
     StartMenuDesign() {
@@ -64,6 +64,7 @@ public class StartMenuDesign extends JFrame {
         signOutButton.addMouseListener(buttonClick);
         createUserButton.addMouseListener(buttonClick);
         newGameButton.addMouseListener(buttonClick);
+        changeColourButton.addMouseListener(buttonClick);
 
         // Center panel properties
         add(center, BorderLayout.CENTER);
@@ -91,7 +92,7 @@ public class StartMenuDesign extends JFrame {
 
         bottom.add(homeButton);
         bottom.add(statisticsButton);
-        bottom.add(matchHistoryButton);
+        bottom.add(changeColourButton);
         bottom.add(exitButton);
 
         //JFrame properties
@@ -117,7 +118,7 @@ public class StartMenuDesign extends JFrame {
                     BufferedReader inström = new BufferedReader(new FileReader("Users.txt"));
                     String rad = inström.readLine();
                     s = userNameInput.getText();
-                    while (rad != null){
+                    while (rad != null) {
                         if (rad.equalsIgnoreCase(s)) {
                             welcomeMessage.setText("Välkommen tillbaka " + s);
                             topRight.remove(signInButton);
@@ -163,9 +164,28 @@ public class StartMenuDesign extends JFrame {
                     ex.printStackTrace();
                 }
             }
-            if (src == newGameButton){
+            if (src == newGameButton) {
                 GameGUI gg = new GameGUI();
                 setVisible(false);
+            }
+
+            if (src == changeColourButton) {
+                clicked++;
+                if(clicked ==1){
+                    center.setBackground(Color.ORANGE);
+                }
+                else if(clicked==2){
+                    center.setBackground(Color.green);
+                }
+                else if(clicked==3){
+                    center.setBackground(Color.blue);
+                }
+                else if (clicked==4){
+                    center.setBackground(Color.pink);
+                }
+                else if (clicked == 5){
+                    clicked=0;
+                }
             }
         }
 
