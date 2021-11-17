@@ -10,8 +10,7 @@ import java.io.*;
 import static java.lang.Boolean.TRUE;
 
 public class StartMenuDesign extends JPanel{
-
-    public boolean shouldShowGame = false;
+    public Boolean b = false;
 
     // top panel
     JPanel top = new JPanel();
@@ -40,8 +39,7 @@ public class StartMenuDesign extends JPanel{
 
     int clicked = 0;
 
-    public StartMenuDesign(MouseListener listener) {
-        newGameButton.addMouseListener(listener);
+    public StartMenuDesign() {
 
         //Base Panel properties
         setSize(500, 500);
@@ -164,14 +162,6 @@ public class StartMenuDesign extends JPanel{
                     ex.printStackTrace();
                 }
             }
-            if (src == newGameButton) {
-                shouldShowGame = true;
-                GameGUI gg = new GameGUI();
-                add(gg);
-                gg.setVisible(true);
-                setVisible(false);
-            }
-
             if (src == changeColourButton) {
                 clicked++;
                 if(clicked ==1){

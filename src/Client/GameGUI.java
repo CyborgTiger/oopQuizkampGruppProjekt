@@ -22,7 +22,7 @@ public class GameGUI extends JPanel implements ActionListener {
         setSize(500,500);
         add(questionPanel, BorderLayout.NORTH);
         //questionPanel.setPreferredSize(new Dimension(300,300));
-        optionPanel.setPreferredSize(new Dimension(600,400));
+        optionPanel.setPreferredSize(new Dimension(500,500));
         optionPanel.setLayout(new GridLayout(2,2));
         add(optionPanel, BorderLayout.CENTER);
 
