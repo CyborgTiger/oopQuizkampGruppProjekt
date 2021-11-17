@@ -5,17 +5,25 @@ import javax.xml.stream.events.StartElement;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
+import static java.lang.Boolean.TRUE;
 
 public class StartMenuDesign extends JFrame {
+
 
     // top panel
     JPanel top = new JPanel();
     JPanel topRight = new JPanel();
     JPanel topLeft = new JPanel();
-    JPanel insideTopLeft = new JPanel();
 
     JLabel userName = new JLabel("Username: ");
-    JButton saveUserInputButton = new JButton("Save");
+    JButton signInButton = new JButton("Logga in");
+    JButton signOutButton = new JButton("Logga ut");
+    JButton createUserButton = new JButton("Skapa konto");
     JTextArea userNameInput = new JTextArea();
 
     // Center panel
@@ -23,7 +31,6 @@ public class StartMenuDesign extends JFrame {
     JPanel topCenter = new JPanel();
     JPanel bottomCenter = new JPanel();
     JLabel welcomeMessage = new JLabel("               ");
-    String s = "";
     JButton newGameButton = new JButton("Starta nytt spel");
 
     // Bottom Panel
@@ -32,7 +39,6 @@ public class StartMenuDesign extends JFrame {
     JButton statisticsButton = new JButton("Statistik");
     JButton matchHistoryButton = new JButton("Visa historik");
     JButton exitButton = new JButton("Exit");
-
 
     StartMenuDesign() {
 
@@ -46,11 +52,16 @@ public class StartMenuDesign extends JFrame {
         topLeft.setLayout(new GridLayout(1, 2));
         topLeft.add(userName);
         topLeft.add(userNameInput);
+        userName.setFont(new Font("Serif", Font.BOLD, 15));
         userNameInput.setBackground(Color.pink);
-        userNameInput.setFont(new Font("Serif", Font.BOLD, 25));
+        userNameInput.setFont(new Font("Serif", Font.BOLD, 20));
 
-        topRight.add(saveUserInputButton);
-        saveUserInputButton.addMouseListener(buttonClick);
+        topRight.setLayout(new GridLayout(1, 2));
+        topRight.add(signInButton);
+        topRight.add(createUserButton);
+        signInButton.addMouseListener(buttonClick);
+        signOutButton.addMouseListener(buttonClick);
+        createUserButton.addMouseListener(buttonClick);
 
         // Center panel properties
         add(center, BorderLayout.CENTER);
@@ -70,6 +81,7 @@ public class StartMenuDesign extends JFrame {
 
         bottomCenter.add(newGameButton);
         newGameButton.setPreferredSize(new Dimension(450, 30));
+
 
         // Bottom panel properties
         add(bottom, BorderLayout.SOUTH);
@@ -94,22 +106,66 @@ public class StartMenuDesign extends JFrame {
         public void mouseClicked(MouseEvent e) throws ClassCastException {
 
             Object src = e.getSource();
-           
+            int clicked = 0;
+            String s;
+            int line = 0;
 
-            if (src == saveUserInputButton) {
-                s = userNameInput.getText();
-                welcomeMessage.setText("Välkommen " + s);
+            if (src == signInButton) {
+                try {
+                    BufferedReader inström = new BufferedReader(new FileReader("Users.txt"));
+                    String rad = inström.readLine();
+                    s = userNameInput.getText();
+                    while (rad != null){
+                        if (rad.equalsIgnoreCase(s)) {
+                            welcomeMessage.setText("Välkommen tillbaka " + s);
+                            topRight.remove(signInButton);
+                            topRight.remove(createUserButton);
+                            topRight.add(signOutButton);
+                            topRight.add(createUserButton);
+                            userNameInput.setEditable(false);
+                            break;
+                        } else {
+                            rad = inström.readLine();
+                            if (rad == null) {
+                                JOptionPane.showMessageDialog(null, "Användaren hittas ej - Korrigera felstavning eller" +
+                                        " skapa ny användare");
+                            }
+                        }
+                    }
 
 
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
+            if (src == signOutButton) {
+                s = userNameInput.getText();
+                welcomeMessage.setText("Tack för idag " + s + "!");
+                userNameInput.setText("");
+                topRight.remove(signOutButton);
+                topRight.remove(createUserButton);
+                topRight.add(signInButton);
+                topRight.add(createUserButton);
+                userNameInput.setEditable(true);
+            }
+            if (src == createUserButton) {
+                PrintWriter utström = null;
+                try {
+                    s = JOptionPane.showInputDialog("Skriv in ditt användarnamn");
+                    utström = new PrintWriter(new BufferedWriter(new FileWriter("Users.txt", TRUE)));
+                    utström.println(s);
+                    utström.close();
 
 
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
 
     };
 
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         new StartMenuDesign();
     }
 
