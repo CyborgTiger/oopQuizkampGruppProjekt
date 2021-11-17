@@ -7,13 +7,17 @@ import java.awt.event.ActionListener;
 
 public class GameGUI extends JFrame implements ActionListener {
 
+    String question = "What is the origin of the Olympic Games?";
+    String[] answers1 = {"Scandinavia", "Greece", "China", "Egypt"};
+
     JPanel questionPanel = new JPanel();
     JPanel optionPanel = new JPanel();
-    JButton optionOne = new JButton("optionOne");
-    JButton optionTwo = new JButton("optionTwo");
-    JButton optionThree = new JButton("optionThree");
-    JButton optionFour = new JButton("optionFour");
-    JLabel questionLabel = new JLabel("Lasdasd Oasdasd Qsdasd Asdasa Olasdasd?");
+    JButton optionOne = new JButton("Option 1");
+    JButton optionTwo = new JButton("Option 2");
+    JButton optionThree = new JButton("Option 3");
+    JButton optionFour = new JButton("Option 4");
+    JLabel questionLabel = new JLabel("Question?");
+
 
     public GameGUI(){
 
@@ -21,19 +25,22 @@ public class GameGUI extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setTitle("KampQuizen");
-        setSize(700,800);
-        add(questionPanel, BorderLayout.NORTH);
-        //questionPanel.setPreferredSize(new Dimension(300,300));
-        optionPanel.setPreferredSize(new Dimension(600,400));
-        optionPanel.setLayout(new GridLayout(2,2));
-        add(optionPanel, BorderLayout.CENTER);
+        setSize(700,600);
 
-        questionLabel.setFont(new Font("Helvetica", Font.PLAIN, 37));
-        questionPanel.add(questionLabel, BorderLayout.SOUTH);
+        optionPanel.setPreferredSize(new Dimension(100,300));
+        optionPanel.setSize(100,300);
+        optionPanel.setLayout(new GridLayout(2,2));
+
+        questionLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
+        questionPanel.add(questionLabel, BorderLayout.NORTH);
+        questionPanel.updateUI();
+
+        add(questionPanel, BorderLayout.NORTH);
+        add(optionPanel, BorderLayout.SOUTH);
 
         addOptions();
+        setConstants(answers1, question);
 
-        pack();
     }
 
     public static void main(String[] args) {
@@ -42,12 +49,11 @@ public class GameGUI extends JFrame implements ActionListener {
     }
 
     public void createButtons() {
-        Dimension buttonSize = new Dimension(100,50);
+        Dimension buttonSize = new Dimension(1,1);
         optionOne.setPreferredSize(buttonSize);
         optionTwo.setPreferredSize(buttonSize);
         optionThree.setPreferredSize(buttonSize);
         optionFour.setPreferredSize(buttonSize);
-
     }
 
     public void addOptions() {
@@ -60,7 +66,14 @@ public class GameGUI extends JFrame implements ActionListener {
         optionTwo.addActionListener(this);
         optionThree.addActionListener(this);
         optionFour.addActionListener(this);
+    }
 
+    public void setConstants(String[] options, String question) {
+        questionLabel.setText(question);
+        optionOne.setText(options[0]);
+        optionTwo.setText(options[1]);
+        optionThree.setText(options[2]);
+        optionFour.setText(options[3]);
     }
 
 
