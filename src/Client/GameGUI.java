@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameGUI extends JFrame implements ActionListener {
+public class GameGUI extends JPanel implements ActionListener {
 
     String question = "What is the origin of the Olympic Games?";
     String[] answers1 = {"Scandinavia", "Greece", "China", "Egypt"};
@@ -23,10 +23,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
         setVisible(true);
         setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-        setTitle("KampQuizen");
-        setSize(700,600);
+        setSize(500,500);
 
         optionPanel.setPreferredSize(new Dimension(100,300));
         optionPanel.setSize(100,300);
