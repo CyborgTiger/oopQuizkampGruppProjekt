@@ -59,9 +59,11 @@ public class StartMenuDesign extends JFrame {
         topRight.setLayout(new GridLayout(1, 2));
         topRight.add(signInButton);
         topRight.add(createUserButton);
+
         signInButton.addMouseListener(buttonClick);
         signOutButton.addMouseListener(buttonClick);
         createUserButton.addMouseListener(buttonClick);
+        newGameButton.addMouseListener(buttonClick);
 
         // Center panel properties
         add(center, BorderLayout.CENTER);
@@ -160,6 +162,10 @@ public class StartMenuDesign extends JFrame {
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
+            }
+            if (src == newGameButton){
+                GameGUI gg = new GameGUI();
+                setVisible(false);
             }
         }
 

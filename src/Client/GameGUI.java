@@ -17,6 +17,7 @@ public class GameGUI extends JFrame implements ActionListener {
 
     public GameGUI(){
 
+        setVisible(true);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -34,11 +35,6 @@ public class GameGUI extends JFrame implements ActionListener {
         addOptions();
 
         pack();
-    }
-
-    public static void main(String[] args) {
-        GameGUI gU = new GameGUI();
-        gU.setVisible(true);
     }
 
     public void createButtons() {

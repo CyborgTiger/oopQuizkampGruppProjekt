@@ -13,7 +13,7 @@ public class Server {
 
     public Server() {
 
-        int portNumber = 44445;
+        int portNumber = 44444;
 
         try (
                 ServerSocket serverSocket = new ServerSocket(portNumber);
