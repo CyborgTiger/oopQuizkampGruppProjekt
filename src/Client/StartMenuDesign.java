@@ -57,7 +57,7 @@ public class StartMenuDesign extends JPanel{
         topLeft.add(userName);
         topLeft.add(userNameInput);
         userName.setFont(new Font("Serif", Font.BOLD, 15));
-        userNameInput.setBackground(Color.pink);
+        userNameInput.setBackground(Color.WHITE);
         userNameInput.setFont(new Font("Serif", Font.BOLD, 20));
 
         topRight.setLayout(new GridLayout(1, 2));
@@ -166,15 +166,23 @@ public class StartMenuDesign extends JPanel{
                 clicked++;
                 if(clicked ==1){
                     center.setBackground(Color.ORANGE);
+                    topCenter.setBackground(Color.ORANGE);
+                    bottomCenter.setBackground(Color.ORANGE);
                 }
                 else if(clicked==2){
                     center.setBackground(Color.green);
+                    topCenter.setBackground(Color.green);
+                    bottomCenter.setBackground(Color.green);
                 }
                 else if(clicked==3){
                     center.setBackground(Color.cyan);
+                    topCenter.setBackground(Color.cyan);
+                    bottomCenter.setBackground(Color.cyan);
                 }
                 else if (clicked==4){
                     center.setBackground(Color.pink);
+                    topCenter.setBackground(Color.pink);
+                    bottomCenter.setBackground(Color.pink);
                 }
                 else if (clicked == 5){
                     clicked=0;
