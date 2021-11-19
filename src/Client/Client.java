@@ -1,39 +1,41 @@
 package Client;
 
 import java.io.*;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 
 public class Client {
+    public static void main(String[] args) throws IOException {
 
-    Client() {
-        String hostName = "127.0.0.1";
+        String hostName = "127.0.0.1"; //localhost
+        //String hostName = "172.20.200.194"; //localhost
         int portNumber = 44444;
 
         try (
-                Socket Socket = new Socket(hostName, portNumber);
-                PrintWriter toServer = new PrintWriter(Socket.getOutputStream(), true);
-                BufferedReader serverIn = new BufferedReader(
-                        new InputStreamReader(Socket.getInputStream()));
-                BufferedReader clientInput =
-                        new BufferedReader(new InputStreamReader(System.in))
+                Socket kkSocket = new Socket(hostName, portNumber);
+                PrintWriter out = new PrintWriter(kkSocket.getOutputStream(), true);
+                BufferedReader in = new BufferedReader(
+                        new InputStreamReader(kkSocket.getInputStream()));
+                BufferedReader stdIn =
+                        new BufferedReader(new InputStreamReader(System.in));
         ) {
 
 
             String fromServer;
             String fromUser;
 
-            while ((fromServer = serverIn.readLine()) != null) {
-                String correct = "Correct";
-                String incorrect = "Incorrect";
-                System.out.println("Server: " + fromServer);
-                if (fromServer.equals(correct) || fromServer.equals(incorrect)){
-                    toServer.println("");
-                    continue;
+            while (!(fromServer = in.readLine()).equals("end")) {
+
+                if (fromServer.equals("Bye."))
+                    break;
+                if(!fromServer.isEmpty()) {
+                    System.out.println("Server: " + fromServer);
+
                 }
-                fromUser = clientInput.readLine();
+
+                fromUser = stdIn.readLine();
                 if (fromUser != null) {
-                    toServer.println(fromUser);
+                    //System.out.println("Client: " + fromUser);
+                    out.println(fromUser);
                 }
             }
         } catch (UnknownHostException e) {
@@ -44,8 +46,5 @@ public class Client {
                     hostName);
             System.exit(1);
         }
-    }
-    public static void main(String[] args) {
-        new Client();
     }
 }

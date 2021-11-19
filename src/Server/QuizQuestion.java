@@ -4,7 +4,7 @@ public class QuizQuestion {
     private final int correctAnswerIndex;
 
     private final String question;
-    //TODO add catagory
+    //TODO add category
 
 
     private final String[] answers;

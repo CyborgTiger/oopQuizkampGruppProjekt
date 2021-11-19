@@ -30,17 +30,18 @@ public class Server {
             String inputLine;
 
             toClient.println("welcome");
-
+            int questionNo = 0;
             while (true) {
                 inputLine = fromClient.readLine();
                 if( inputLine != null) {
 
-                    int questionNo = 0;
+
                     System.out.println(inputLine);
                     if ("requestQuestion".equals(inputLine)) {
                         System.out.println("sending question");
 
                         toClient.println(sendQuestion(questionNo));
+                      //  questionNo ++;
 
                     }  else  {
                         System.out.println("check answer: " + inputLine + " length:" + inputLine.length());
