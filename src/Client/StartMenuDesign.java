@@ -9,7 +9,7 @@ import java.io.*;
 
 import static java.lang.Boolean.TRUE;
 
-public class StartMenuDesign extends JPanel{
+public class StartMenuDesign extends JPanel {
     public Boolean b = false;
 
     // top panel
@@ -27,8 +27,26 @@ public class StartMenuDesign extends JPanel{
     JPanel center = new JPanel();
     JPanel topCenter = new JPanel();
     JPanel bottomCenter = new JPanel();
+    JPanel upperBottomCenter = new JPanel();
+    JPanel bottomBottomCenter = new JPanel();
+
     JLabel welcomeMessage = new JLabel("               ");
+    JLabel loggedInOpponents1 = new JLabel("Användare 1");
+    JLabel loggedInOpponents2 = new JLabel("Användare 2");
+    JLabel loggedInOpponents3 = new JLabel("Användare 3");
+    JLabel loggedInOpponents4 = new JLabel("Användare 4");
+    JLabel empty1 = new JLabel("");
+    JLabel empty2 = new JLabel("");
+    JLabel empty3 = new JLabel("");
+    JLabel empty4 = new JLabel("");
+    JButton sendInviteButton1 = new JButton("Utmana");
+    JButton sendInviteButton2 = new JButton("Utmana");
+    JButton sendInviteButton3 = new JButton("Utmana");
+    JButton sendInviteButton4 = new JButton("Utmana");
+
+    JLabel loggedInOpponentsText = new JLabel("Inloggade motståndare");
     JButton newGameButton = new JButton("Starta nytt spel");
+
 
     // Bottom Panel
     JPanel bottom = new JPanel();
@@ -67,27 +85,40 @@ public class StartMenuDesign extends JPanel{
         signInButton.addMouseListener(buttonClick);
         signOutButton.addMouseListener(buttonClick);
         createUserButton.addMouseListener(buttonClick);
-        newGameButton.addMouseListener(buttonClick);
         changeColourButton.addMouseListener(buttonClick);
 
         // Center panel properties
         add(center, BorderLayout.CENTER);
-        GridBagConstraints gbc = new GridBagConstraints();
+        center.setLayout(new GridLayout(4, 1));
 
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        center.add(topCenter, gbc);
-
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        center.add(bottomCenter, gbc);
-
+        center.add(topCenter);
         topCenter.add(welcomeMessage);
         welcomeMessage.setBackground(Color.WHITE);
-
         bottomCenter.add(newGameButton);
+
+        center.add(bottomCenter);
+        bottomCenter.add(loggedInOpponentsText);
+        loggedInOpponentsText.setFont(new Font("Serif", Font.BOLD, 30));
+        loggedInOpponentsText.setForeground(Color.BLUE);
+
         newGameButton.setPreferredSize(new Dimension(450, 30));
+
+        center.add(bottomBottomCenter);
+
+
+        bottomBottomCenter.setLayout(new GridLayout(4, 8));
+        bottomBottomCenter.add(loggedInOpponents1);
+        bottomBottomCenter.add(empty1);
+        bottomBottomCenter.add(sendInviteButton1);
+        bottomBottomCenter.add(loggedInOpponents2);
+        bottomBottomCenter.add(empty2);
+        bottomBottomCenter.add(sendInviteButton2);
+        bottomBottomCenter.add(loggedInOpponents3);
+        bottomBottomCenter.add(empty3);
+        bottomBottomCenter.add(sendInviteButton3);
+        bottomBottomCenter.add(loggedInOpponents4);
+        bottomBottomCenter.add(empty4);
+        bottomBottomCenter.add(sendInviteButton4);
 
 
         // Bottom panel properties
@@ -164,28 +195,28 @@ public class StartMenuDesign extends JPanel{
             }
             if (src == changeColourButton) {
                 clicked++;
-                if(clicked ==1){
+                if (clicked == 1) {
                     center.setBackground(Color.ORANGE);
                     topCenter.setBackground(Color.ORANGE);
                     bottomCenter.setBackground(Color.ORANGE);
-                }
-                else if(clicked==2){
+                    bottomBottomCenter.setBackground(Color.ORANGE);
+                } else if (clicked == 2) {
                     center.setBackground(Color.green);
                     topCenter.setBackground(Color.green);
                     bottomCenter.setBackground(Color.green);
-                }
-                else if(clicked==3){
+                    bottomBottomCenter.setBackground(Color.green);
+                } else if (clicked == 3) {
                     center.setBackground(Color.cyan);
                     topCenter.setBackground(Color.cyan);
                     bottomCenter.setBackground(Color.cyan);
-                }
-                else if (clicked==4){
+                    bottomBottomCenter.setBackground(Color.cyan);
+                } else if (clicked == 4) {
                     center.setBackground(Color.pink);
                     topCenter.setBackground(Color.pink);
                     bottomCenter.setBackground(Color.pink);
-                }
-                else if (clicked == 5){
-                    clicked=0;
+                    bottomBottomCenter.setBackground(Color.pink);
+                } else if (clicked == 5) {
+                    clicked = 0;
                 }
             }
         }
