@@ -8,6 +8,7 @@ public class Base extends JFrame {
 
     StartMenuDesign smd = new StartMenuDesign();
     GameGUI gameGUI = new GameGUI();
+    Client client = new Client();
 
     Base() {
         setTitle("Quizkampen");
@@ -29,7 +30,18 @@ public class Base extends JFrame {
                 smd.setVisible(false);
                 gameGUI.setVisible(true);
             }
-
+            if (src == gameGUI.optionOne) {
+                client.answerChoice(0);
+            }
+            if (src == gameGUI.optionTwo) {
+                client.answerChoice(1);
+            }
+            if (src == gameGUI.optionThree) {
+                client.answerChoice(2);
+            }
+            if (src == gameGUI.optionFour) {
+                client.answerChoice(3);
+            }
         }
     };
 

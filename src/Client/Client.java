@@ -4,36 +4,53 @@ import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
+public class Client extends Thread{
+    public String fromUser = "";
 
     Client() {
+        start();
+    }
+    public void answerChoice(int answerNumber){
+        if (answerNumber == 0){
+            action("1");
+        } else if (answerNumber == 1){
+            action("2");
+        } else if (answerNumber == 2){
+            action("3");
+        } else if (answerNumber == 3){
+            action("4");
+        }
+    }
+    public void signUpChoice(){
+        action("sign up");
+    }
+
+    public void action(String actionChoice){
+        fromUser = actionChoice;
+    }
+    @Override
+    public void run() {
         String hostName = "127.0.0.1";
         int portNumber = 44444;
 
         try (
-                Socket Socket = new Socket(hostName, portNumber);
-                PrintWriter toServer = new PrintWriter(Socket.getOutputStream(), true);
-                BufferedReader serverIn = new BufferedReader(
-                        new InputStreamReader(Socket.getInputStream()));
-                BufferedReader clientInput =
-                        new BufferedReader(new InputStreamReader(System.in))
+                Socket socket = new Socket(hostName, portNumber);
+                PrintWriter toServer = new PrintWriter(socket.getOutputStream(), true);
+                BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                //BufferedReader clientInput = new BufferedReader(new InputStreamReader(System.in))
         ) {
 
 
             String fromServer;
-            String fromUser;
 
             while ((fromServer = serverIn.readLine()) != null) {
-                String correct = "Correct";
-                String incorrect = "Incorrect";
-                System.out.println("Server: " + fromServer);
-                if (fromServer.equals(correct) || fromServer.equals(incorrect)){
+                if (fromServer.equals("Correct") || fromServer.equals("Incorrect")){
                     toServer.println("");
                     continue;
                 }
-                fromUser = clientInput.readLine();
-                if (fromUser != null) {
+                if (fromUser.equals("")) {
                     toServer.println(fromUser);
+                    fromUser = "";
                 }
             }
         } catch (UnknownHostException e) {
@@ -44,8 +61,5 @@ public class Client {
                     hostName);
             System.exit(1);
         }
-    }
-    public static void main(String[] args) {
-        new Client();
     }
 }
