@@ -7,7 +7,7 @@ import java.awt.event.*;
 public class Base extends JFrame {
 
     StartMenuDesign smd = new StartMenuDesign();
-    GameGUI gameGUI = new GameGUI();
+    Backend gameGUI = new Backend();
     Client client = new Client();
 
     Base() {

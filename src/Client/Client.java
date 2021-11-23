@@ -42,7 +42,7 @@ public class Client extends Thread{
 
 
             String fromServer;
-
+            //BAAD
             while ((fromServer = serverIn.readLine()) != null) {
                 if (fromServer.equals("Correct") || fromServer.equals("Incorrect")){
                     toServer.println("");
