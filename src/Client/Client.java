@@ -1,61 +1,112 @@
 package Client;
 
-import Server.QuizQuestions;
-
-import java.io.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import javax.swing.*;
 
-public class Client extends Thread{
-    public String fromUser = "";
-    public QuizQuestions quizQuestions;
-
-    Client() {
-        start();
-    }
-    public void answerResult(boolean result){
-        if (result){
-            action("Correct");
-        } else {
-            action("Incorrect");
-        }
-    }
-
-    public void action(String actionChoice){
-        fromUser = actionChoice;
-    }
-    @Override
-    public void run() {
-        String hostName = "127.0.0.1";
-        int portNumber = 44444;
-
-        try (
-                Socket socket = new Socket(hostName, portNumber);
-                PrintWriter toServer = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader serverIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                //BufferedReader clientInput = new BufferedReader(new InputStreamReader(System.in))
-        ) {
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 
+public class Client extends JFrame implements ActionListener {
+
+    private BufferedReader in;
+    private PrintWriter out;
+
+    StartMenuDesign smd = new StartMenuDesign();
+    GameGUI gameGUI = new GameGUI();
+    Scoreboard scoreBoard = new Scoreboard();
+    String name;
+    int points =0;
+
+    public Client() {
+
+        setTitle("Quizkampen");
+        setSize(500, 550);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+        smd.newGameButton.addMouseListener(buttonClick);
+        add(smd);
+        add(gameGUI).setVisible(false);
+        add(scoreBoard).setVisible(false);
+
+        gameGUI.optionOne.addMouseListener(buttonClick);
+        gameGUI.optionTwo.addMouseListener(buttonClick);
+        gameGUI.optionThree.addMouseListener(buttonClick);
+        gameGUI.optionFour.addMouseListener(buttonClick);
+
+        String hostName = "127.0.0.1";  //localhost
+        int portNumber = 12345;
+
+
+        try {
+            Socket socket = new Socket(hostName, portNumber);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String fromServer;
-            //TODO make not BAD
-            while ((fromServer = serverIn.readLine()) != null) {
-                if (fromServer.equals("Correct") || fromServer.equals("Incorrect")){
-                    toServer.println("");
-                    continue;
-                }
-                if (fromUser.equals("")) {
-                    toServer.println(fromUser);
-                    fromUser = "";
-                }
+
+            while ((fromServer = (String)in.readLine()) != null) {
+                System.out.println(fromServer);
+                scoreBoard.txt.append(fromServer + "\n");
             }
-        } catch (UnknownHostException e) {
-            System.err.println("Don't know about host " + hostName);
-            System.exit(1);
-        } catch (IOException e) {
-            System.err.println("Couldn't get I/O for the connection to " +
-                    hostName);
-            System.exit(1);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+    MouseAdapter buttonClick = new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) throws ClassCastException {
+            Object src = e.getSource();
+            if (src == gameGUI.optionOne) {
+                name = smd.userNameInput.getText();
+                gameGUI.optionOne.setBackground(Color.RED);
+                gameGUI.setVisible(false);
+                scoreBoard.setVisible(true);
+                out.println(name + ": " + points +"\n");
+            }
+            if (src == gameGUI.optionTwo) {
+                name = smd.userNameInput.getText();
+                gameGUI.optionTwo.setBackground(Color.green);
+                points ++;
+                gameGUI.setVisible(false);
+                scoreBoard.setVisible(true);
+                out.println(name + ": " + points);
+            }
+            if (src == gameGUI.optionThree) {
+                name = smd.userNameInput.getText();
+                gameGUI.optionThree.setBackground(Color.RED);
+                gameGUI.setVisible(false);
+                scoreBoard.setVisible(true);
+                out.println(name + ": " + points);
+            }
+            if (src == gameGUI.optionFour) {
+                name = smd.userNameInput.getText();
+                gameGUI.optionFour.setBackground(Color.RED);
+                gameGUI.setVisible(false);
+                out.println(name + ": " + points);
+            }
+            if (src == smd.newGameButton) {
+                smd.setVisible(false);
+                gameGUI.setVisible(true);
+
+            }
+        }
+    };
+
+    public static void main(String[] args) {
+        Client c = new Client();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 }
