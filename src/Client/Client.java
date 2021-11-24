@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.net.Socket;
+import java.util.TimerTask;
 import javax.swing.*;
 
 
@@ -66,6 +67,8 @@ public class Client extends JFrame implements ActionListener {
         @Override
         public void mouseClicked(MouseEvent e) throws ClassCastException {
             Object src = e.getSource();
+            int delay=1000;
+
             if (src == gameGUI.optionOne) {
                 boolean result;
                 name = smd.userNameInput.getText();
@@ -78,6 +81,18 @@ public class Client extends JFrame implements ActionListener {
                     result = false;
                 }
                 getMoreQuestions(result);
+                gameGUI.optionOne.setBackground(Color.RED);
+
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
+
             }
             if (src == gameGUI.optionTwo) {
                 boolean result;
@@ -91,6 +106,17 @@ public class Client extends JFrame implements ActionListener {
                     result = false;
                 }
                 getMoreQuestions(result);
+                gameGUI.optionTwo.setBackground(Color.green);
+                points ++;
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == gameGUI.optionThree) {
                 boolean result;
@@ -105,6 +131,16 @@ public class Client extends JFrame implements ActionListener {
                 }
                 getMoreQuestions(result);
 
+                gameGUI.optionThree.setBackground(Color.RED);
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == gameGUI.optionFour) {
                 boolean result;
@@ -118,6 +154,16 @@ public class Client extends JFrame implements ActionListener {
                     result = false;
                 }
                 getMoreQuestions(result);
+                gameGUI.optionFour.setBackground(Color.RED);
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == smd.newGameButton) {
                 smd.setVisible(false);
