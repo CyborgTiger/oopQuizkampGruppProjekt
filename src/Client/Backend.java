@@ -7,7 +7,7 @@ public class Backend extends GameGUI{
         String question = questions.getQuizQuestions().get(1).getQuestion();
         String[] answers = questions.getQuizQuestions().get(1).getAnswers();
 
-        setConstants(answers, question);
+        //setConstants(answers, question);
         return questions.getQuizQuestions().get(1).getCorrectAnswerIndex();
         //main thread checks waits for input
 

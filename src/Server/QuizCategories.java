@@ -66,4 +66,23 @@ public class QuizCategories {
     public ArrayList<QuizQuestions> getQuizCategories() {
         return quizCategories;
     }
+
+
+    public static void main(String[] args) {
+        QuizCategories quizCategories = new QuizCategories();
+        String question1 = quizCategories.getQuizCategories().get(0).getQuizQuestions().get(0).getQuestion();
+        System.out.println(question1);
+        int question2 = quizCategories.getQuizCategories().get(0).getQuizQuestions().get(1).getCorrectAnswerIndex();
+        System.out.println(question2);
+
+
+
+      for (String s : quizCategories.getQuizCategories().get(0).getQuizQuestions().get(0).getAnswers()){
+          System.out.println(s);
+      }
+
+
+      String f =  quizCategories.getQuizCategories().get(0).getQuizQuestions().get(0).getAnswers()[0];
+        System.out.println(f);
+    }
 }
