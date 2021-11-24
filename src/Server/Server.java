@@ -33,7 +33,7 @@ public class Server {
 
             while (true) {
                 inputLine = fromClient.readLine();
-                if( inputLine != null) {
+                if(inputLine != null) {
 
                     int questionNo = 0;
                     System.out.println(inputLine);
@@ -47,7 +47,7 @@ public class Server {
 
                         toClient.println(checkAnswer(questionNo, Integer.parseInt(inputLine.trim())));
 
-                        questionNo ++;
+                        questionNo++;
 
                     }
                 }

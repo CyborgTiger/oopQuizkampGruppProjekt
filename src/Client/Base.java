@@ -7,7 +7,10 @@ import java.awt.event.*;
 public class Base extends JFrame {
 
     StartMenuDesign smd = new StartMenuDesign();
-    GameGUI gameGUI = new GameGUI();
+    Backend gameGUI = new Backend();
+    Client client = new Client();
+    int chosenAnswer = -1;
+    int correctAnswer = -1;
     //Match match = new Match();
 
     Base() {
@@ -29,12 +32,29 @@ public class Base extends JFrame {
             if (src == smd.newGameButton) {
                 smd.setVisible(false);
                 gameGUI.setVisible(true);
+                correctAnswer = gameGUI.game(client.quizQuestions);
             }
-
+            if (src == gameGUI.optionOne) {
+                chosenAnswer = 0;
+                client.answerResult(chosenAnswer == correctAnswer);
+            }
+            if (src == gameGUI.optionTwo) {
+                chosenAnswer = 1;
+                client.answerResult(chosenAnswer == correctAnswer);
+            }
+            if (src == gameGUI.optionThree) {
+                chosenAnswer = 2;
+                client.answerResult(chosenAnswer == correctAnswer);
+            }
+            if (src == gameGUI.optionFour) {
+                chosenAnswer = 3;
+                client.answerResult(chosenAnswer == correctAnswer);
+            }
         }
     };
 
     public static void main(String[] args) {
         new Base();
+
     }
 }
