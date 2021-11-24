@@ -1,17 +1,15 @@
 package Client;
 
+import Server.QuizQuestion;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import javax.swing.*;
-
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
 
 
 public class Client extends JFrame implements ActionListener {
@@ -23,7 +21,10 @@ public class Client extends JFrame implements ActionListener {
     GameGUI gameGUI = new GameGUI();
     Scoreboard scoreBoard = new Scoreboard();
     String name;
-    int points =0;
+    int points = 0;
+    ObjectOutputStream objectOutputStream;
+    ObjectInputStream objectInputStream;
+    QuizQuestion question;
 
     public Client() {
 
@@ -44,16 +45,16 @@ public class Client extends JFrame implements ActionListener {
         gameGUI.optionFour.addMouseListener(buttonClick);
 
         String hostName = "127.0.0.1";  //localhost
-        int portNumber = 12345;
-
+        int portNumber = 55555;
 
         try {
             Socket socket = new Socket(hostName, portNumber);
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String fromServer;
-
-            while ((fromServer = (String)in.readLine()) != null) {
+            objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+            objectInputStream = new ObjectInputStream(socket.getInputStream());
+            while ((fromServer = in.readLine()) != null) {
                 System.out.println(fromServer);
                 scoreBoard.txt.append(fromServer + "\n");
             }
@@ -66,40 +67,87 @@ public class Client extends JFrame implements ActionListener {
         public void mouseClicked(MouseEvent e) throws ClassCastException {
             Object src = e.getSource();
             if (src == gameGUI.optionOne) {
+                boolean result;
                 name = smd.userNameInput.getText();
-                gameGUI.optionOne.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
-                out.println(name + ": " + points +"\n");
+                if(question.getCorrectAnswerIndex() == 0){
+                    gameGUI.optionOne.setBackground(Color.GREEN);
+                    result = true;
+                    points ++;
+                } else {
+                    gameGUI.optionOne.setBackground(Color.RED);
+                    result = false;
+                }
+                getMoreQuestions(result);
             }
             if (src == gameGUI.optionTwo) {
+                boolean result;
                 name = smd.userNameInput.getText();
-                gameGUI.optionTwo.setBackground(Color.green);
-                points ++;
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
-                out.println(name + ": " + points);
+                if(question.getCorrectAnswerIndex() == 0){
+                    gameGUI.optionTwo.setBackground(Color.GREEN);
+                    result = true;
+                    points ++;
+                } else {
+                    gameGUI.optionTwo.setBackground(Color.RED);
+                    result = false;
+                }
+                getMoreQuestions(result);
             }
             if (src == gameGUI.optionThree) {
+                boolean result;
                 name = smd.userNameInput.getText();
-                gameGUI.optionThree.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
-                out.println(name + ": " + points);
+                if(question.getCorrectAnswerIndex() == 0){
+                    gameGUI.optionThree.setBackground(Color.GREEN);
+                    result = true;
+                    points ++;
+                } else {
+                    gameGUI.optionThree.setBackground(Color.RED);
+                    result = false;
+                }
+                getMoreQuestions(result);
+
             }
             if (src == gameGUI.optionFour) {
+                boolean result;
                 name = smd.userNameInput.getText();
-                gameGUI.optionFour.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                out.println(name + ": " + points);
+                if(question.getCorrectAnswerIndex() == 0){
+                    gameGUI.optionFour.setBackground(Color.GREEN);
+                    result = true;
+                    points ++;
+                } else {
+                    gameGUI.optionFour.setBackground(Color.RED);
+                    result = false;
+                }
+                getMoreQuestions(result);
             }
             if (src == smd.newGameButton) {
                 smd.setVisible(false);
                 gameGUI.setVisible(true);
-
+                try {
+                    question = (QuizQuestion) objectInputStream.readObject();
+                    gameGUI.setConstants(question.getAnswers(), question.getQuestion());
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     };
+
+    private void getMoreQuestions(boolean result) {
+        gameGUI.setVisible(false);
+        scoreBoard.setVisible(true);
+        out.println(name + ": " + points);
+        try {
+            objectOutputStream.writeObject(new PlayerResult(name, result));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        try {
+            question = (QuizQuestion) objectInputStream.readObject();
+            gameGUI.setConstants(question.getAnswers(), question.getQuestion());
+        } catch (IOException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         Client c = new Client();
