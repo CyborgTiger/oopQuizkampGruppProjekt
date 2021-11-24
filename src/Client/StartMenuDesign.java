@@ -1,5 +1,6 @@
 package Client;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -97,14 +98,10 @@ public class StartMenuDesign extends JPanel {
         bottomCenter.add(newGameButton);
 
         center.add(bottomCenter);
-        bottomCenter.add(loggedInOpponentsText);
-        loggedInOpponentsText.setFont(new Font("Serif", Font.BOLD, 30));
-        loggedInOpponentsText.setForeground(Color.BLUE);
 
         newGameButton.setPreferredSize(new Dimension(450, 30));
 
         center.add(bottomBottomCenter);
-
 
         bottomBottomCenter.setLayout(new GridLayout(4, 8));
         bottomBottomCenter.add(loggedInOpponents1);
