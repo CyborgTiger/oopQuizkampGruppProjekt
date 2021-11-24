@@ -16,8 +16,4 @@ public class MultiWriter {
         return writers;
     }
 
-    public void removeWriter(PrintWriter p) {
-        writers.remove(p);
-    }
-
 }

@@ -32,18 +32,6 @@ public class StartMenuDesign extends JPanel {
     JPanel bottomBottomCenter = new JPanel();
 
     JLabel welcomeMessage = new JLabel("               ");
-    JLabel loggedInOpponents1 = new JLabel("Användare 1");
-    JLabel loggedInOpponents2 = new JLabel("Användare 2");
-    JLabel loggedInOpponents3 = new JLabel("Användare 3");
-    JLabel loggedInOpponents4 = new JLabel("Användare 4");
-    JLabel empty1 = new JLabel("");
-    JLabel empty2 = new JLabel("");
-    JLabel empty3 = new JLabel("");
-    JLabel empty4 = new JLabel("");
-    JButton sendInviteButton1 = new JButton("Utmana");
-    JButton sendInviteButton2 = new JButton("Utmana");
-    JButton sendInviteButton3 = new JButton("Utmana");
-    JButton sendInviteButton4 = new JButton("Utmana");
 
     JLabel loggedInOpponentsText = new JLabel("Inloggade motståndare");
     JButton newGameButton = new JButton("Starta nytt spel");
@@ -104,19 +92,6 @@ public class StartMenuDesign extends JPanel {
         center.add(bottomBottomCenter);
 
         bottomBottomCenter.setLayout(new GridLayout(4, 8));
-        bottomBottomCenter.add(loggedInOpponents1);
-        bottomBottomCenter.add(empty1);
-        bottomBottomCenter.add(sendInviteButton1);
-        bottomBottomCenter.add(loggedInOpponents2);
-        bottomBottomCenter.add(empty2);
-        bottomBottomCenter.add(sendInviteButton2);
-        bottomBottomCenter.add(loggedInOpponents3);
-        bottomBottomCenter.add(empty3);
-        bottomBottomCenter.add(sendInviteButton3);
-        bottomBottomCenter.add(loggedInOpponents4);
-        bottomBottomCenter.add(empty4);
-        bottomBottomCenter.add(sendInviteButton4);
-
 
         // Bottom panel properties
         add(bottom, BorderLayout.SOUTH);
@@ -127,7 +102,10 @@ public class StartMenuDesign extends JPanel {
         bottom.add(changeColourButton);
         bottom.add(exitButton);
 
-        //JFrame properties
+        center.setBackground(Color.WHITE);
+        topCenter.setBackground(Color.WHITE);
+        bottomCenter.setBackground(Color.WHITE);
+        bottomBottomCenter.setBackground(Color.WHITE);
 
     }
 

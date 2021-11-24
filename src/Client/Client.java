@@ -54,7 +54,6 @@ public class Client extends JFrame implements ActionListener {
             String fromServer;
 
             while ((fromServer = (String)in.readLine()) != null) {
-                // scoreBoard.txt.append(fromServer);
                 System.out.println(fromServer);
                 scoreBoard.txt.append(fromServer + "\n");
             }
@@ -91,7 +90,6 @@ public class Client extends JFrame implements ActionListener {
             if (src == gameGUI.optionFour) {
                 name = smd.userNameInput.getText();
                 gameGUI.optionFour.setBackground(Color.RED);
-                out.println(name + " svarade fel");
                 gameGUI.setVisible(false);
                 out.println(name + ": " + points);
             }
@@ -100,10 +98,8 @@ public class Client extends JFrame implements ActionListener {
                 gameGUI.setVisible(true);
 
             }
-
         }
     };
-
 
     public static void main(String[] args) {
         Client c = new Client();
