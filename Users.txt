@@ -1,7 +1,6 @@
 Erik
-null
-null
-null
-null
 h
 eh
+x
+y
+z

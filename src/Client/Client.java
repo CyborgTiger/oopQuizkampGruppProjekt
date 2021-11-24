@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.TimerTask;
 import javax.swing.*;
 
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -54,7 +55,6 @@ public class Client extends JFrame implements ActionListener {
             String fromServer;
 
             while ((fromServer = (String)in.readLine()) != null) {
-                System.out.println(fromServer);
                 scoreBoard.txt.append(fromServer + "\n");
             }
         } catch (Exception e) {
@@ -65,33 +65,62 @@ public class Client extends JFrame implements ActionListener {
         @Override
         public void mouseClicked(MouseEvent e) throws ClassCastException {
             Object src = e.getSource();
+            int delay=1000;
+
             if (src == gameGUI.optionOne) {
                 name = smd.userNameInput.getText();
                 gameGUI.optionOne.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
+
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
                 out.println(name + ": " + points +"\n");
+
             }
             if (src == gameGUI.optionTwo) {
                 name = smd.userNameInput.getText();
                 gameGUI.optionTwo.setBackground(Color.green);
                 points ++;
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
-                out.println(name + ": " + points);
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == gameGUI.optionThree) {
                 name = smd.userNameInput.getText();
                 gameGUI.optionThree.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                scoreBoard.setVisible(true);
-                out.println(name + ": " + points);
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == gameGUI.optionFour) {
                 name = smd.userNameInput.getText();
                 gameGUI.optionFour.setBackground(Color.RED);
-                gameGUI.setVisible(false);
-                out.println(name + ": " + points);
+                Timer timer = new Timer(delay, new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent ae) {
+                        gameGUI.setVisible(false);
+                        scoreBoard.setVisible(true);
+                    }
+                });
+                timer.start();
+                out.println(name + ": " + points +"\n");
             }
             if (src == smd.newGameButton) {
                 smd.setVisible(false);
