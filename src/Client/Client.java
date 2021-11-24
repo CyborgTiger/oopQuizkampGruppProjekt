@@ -1,28 +1,24 @@
 package Client;
 
+import Server.QuizQuestions;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client extends Thread{
     public String fromUser = "";
+    public QuizQuestions quizQuestions;
 
     Client() {
         start();
     }
-    public void answerChoice(int answerNumber){
-        if (answerNumber == 0){
-            action("1");
-        } else if (answerNumber == 1){
-            action("2");
-        } else if (answerNumber == 2){
-            action("3");
-        } else if (answerNumber == 3){
-            action("4");
+    public void answerResult(boolean result){
+        if (result){
+            action("Correct");
+        } else {
+            action("Incorrect");
         }
-    }
-    public void signUpChoice(){
-        action("sign up");
     }
 
     public void action(String actionChoice){

@@ -9,6 +9,8 @@ public class Base extends JFrame {
     StartMenuDesign smd = new StartMenuDesign();
     Backend gameGUI = new Backend();
     Client client = new Client();
+    int chosenAnswer = -1;
+    int correctAnswer = -1;
 
     Base() {
         setTitle("Quizkampen");
@@ -29,23 +31,29 @@ public class Base extends JFrame {
             if (src == smd.newGameButton) {
                 smd.setVisible(false);
                 gameGUI.setVisible(true);
+                correctAnswer = gameGUI.game(client.quizQuestions);
             }
             if (src == gameGUI.optionOne) {
-                client.answerChoice(0);
+                chosenAnswer = 0;
+                client.answerResult(chosenAnswer == correctAnswer);
             }
             if (src == gameGUI.optionTwo) {
-                client.answerChoice(1);
+                chosenAnswer = 1;
+                client.answerResult(chosenAnswer == correctAnswer);
             }
             if (src == gameGUI.optionThree) {
-                client.answerChoice(2);
+                chosenAnswer = 2;
+                client.answerResult(chosenAnswer == correctAnswer);
             }
             if (src == gameGUI.optionFour) {
-                client.answerChoice(3);
+                chosenAnswer = 3;
+                client.answerResult(chosenAnswer == correctAnswer);
             }
         }
     };
 
     public static void main(String[] args) {
         new Base();
+
     }
 }
