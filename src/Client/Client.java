@@ -38,7 +38,7 @@ public class Client extends Thread{
 
 
             String fromServer;
-            //BAAD
+            //TODO make not BAD
             while ((fromServer = serverIn.readLine()) != null) {
                 if (fromServer.equals("Correct") || fromServer.equals("Incorrect")){
                     toServer.println("");

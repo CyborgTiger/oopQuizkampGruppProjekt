@@ -44,8 +44,8 @@ public class Server {
 
                     }  else  {
                         System.out.println("check answer: " + inputLine + " length:" + inputLine.length());
-
-                        toClient.println(checkAnswer(questionNo, Integer.parseInt(inputLine.trim())));
+                        //TODO send results
+                        //toClient.println(checkAnswer(questionNo, Integer.parseInt(inputLine.trim())));
 
                         questionNo++;
 
@@ -63,24 +63,15 @@ public class Server {
     public static void main(String[] args) {
         new Server();
     }
-    QuizQuestions quizQuestions = new QuizQuestions();
+    QuizCategories quizQuestions = new QuizCategories();
 
     private String sendQuestion(int questionNr){
 
-        QuizQuestion quizQuestion = quizQuestions.getQuizQuestions().get(questionNr);
+        QuizQuestion quizQuestion = quizQuestions.getQuizCategories().get(questionNr).getQuizQuestions().get(questionNr);
         String question = quizQuestion.getQuestion();
         String[] answers = quizQuestion.getAnswers();
         String answersString = Arrays.toString(answers);
         return question + " " + answersString;
 
-    }
-
-    private String checkAnswer(int questionNr, int answer){
-       int correctAnswer = quizQuestions.getQuizQuestions().get(questionNr).getCorrectAnswerIndex();
-        if (answer == correctAnswer){
-            return "Correct";
-        } else{
-            return "Incorrect";
-        }
     }
 }
