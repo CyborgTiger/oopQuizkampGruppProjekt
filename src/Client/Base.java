@@ -8,6 +8,7 @@ public class Base extends JFrame {
 
     StartMenuDesign smd = new StartMenuDesign();
     GameGUI gameGUI = new GameGUI();
+    //Match match = new Match();
 
     Base() {
         setTitle("Quizkampen");
