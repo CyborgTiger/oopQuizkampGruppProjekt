@@ -1,13 +1,12 @@
 package Server;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class QuizQuestion {
+public class QuizQuestion implements Serializable {
     private final int correctAnswerIndex;
 
     private final String question;
-    //TODO add catagory
-
     private final String[] answers;
 
     @Override

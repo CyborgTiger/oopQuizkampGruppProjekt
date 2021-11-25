@@ -1,25 +1,22 @@
 package Client;
 
 import Server.QuizCategories;
-import Server.QuizQuestion;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
-import java.util.logging.Logger;
-import javax.swing.*;
 
 
 public class Client extends JFrame implements ActionListener {
 
     private BufferedReader in;
     private PrintWriter out;
+    //private ObjectInputStream objectInputStream;
 
     StartMenuDesign smd = new StartMenuDesign();
     GameGUI gameGUI = new GameGUI();
@@ -63,7 +60,7 @@ public class Client extends JFrame implements ActionListener {
 
 
         String hostName = "127.0.0.1";  //localhost
-        int portNumber = 12345;
+        int portNumber = 55555;
 
 
         try {
@@ -71,8 +68,8 @@ public class Client extends JFrame implements ActionListener {
             out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             String fromServer;
-
-            while ((fromServer = (String) in.readLine()) != null) {
+            //objectInputStream = new ObjectInputStream(socket.getInputStream());
+            while ((fromServer = in.readLine()) != null) {
                 scoreBoard.txt.append(fromServer + "\n");
             }
         } catch (Exception e) {
@@ -146,6 +143,15 @@ public class Client extends JFrame implements ActionListener {
                 name = smd.userNameInput.getText();
                 smd.setVisible(false);
                 category.setVisible(true);
+                /*out.println("start");
+                try {
+
+                        Object quizObject = objectInputStream.readObject();
+                        quizCategories = (QuizCategories) quizObject;
+
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }*/
             }
 
             if(src == category.optionOne){

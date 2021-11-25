@@ -1,18 +1,11 @@
 package Client;
+
 import Server.QuizCategories;
 import Server.QuizQuestion;
 import Server.QuizQuestions;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.*;
 import java.net.Socket;
-import java.sql.ClientInfoStatus;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
 public class ClientHandler extends Thread{
@@ -28,7 +21,7 @@ public class ClientHandler extends Thread{
 
     public void run(){
 
-        try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);  //true for autoflush
+        try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))){
             ObjectOutputStream out2 = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream in2 = new ObjectInputStream(socket.getInputStream());
@@ -46,72 +39,24 @@ public class ClientHandler extends Thread{
 
             //Vi lägger in vår printWriter i multiWriters lista
             multiWriter.addWriter(out);
-            ;
-            while(true){
-                /*String input = in.readLine();
-                if (input == null) {
-                    return;
+
+            while (match.getRound() != 5) {
+                /*if (in.readLine().equals("start")){
+                    out2.writeObject(quizCategories);
+
+                    out2.flush();
                 }*/
-                if (match.getRound() == 4){
-                    out2.writeObject(question2cat2);
-                    out2.flush();
-                    PlayerResult playerResult = (PlayerResult) in2.readObject();
-                    if (playerResult.isResult()){
-                        if (playerResult.getName().equals("Player 1")){
-                            match.gainPoint(1);
-                        }
-                        if (playerResult.getName().equals("Player 2")){
-                            match.gainPoint(2);
-                        }
-                    }
-                    match.endRound();
+                if (match.getRound() == 4) {
+                    sendAndReceive(out2, in2, question2cat2, match);
                 }
-                if (match.getRound() == 3){
-                    out2.writeObject(question1cat2);
-                    out2.flush();
-                    PlayerResult playerResult = (PlayerResult) in2.readObject();
-                    if (playerResult.isResult()){
-                        if (playerResult.getName().equals("Player 1")){
-                            match.gainPoint(1);
-                        }
-                        if (playerResult.getName().equals("Player 2")){
-                            match.gainPoint(2);
-                        }
-                    }
-                    match.endRound();
+                if (match.getRound() == 3) {
+                    sendAndReceive(out2, in2, question1cat2, match);
                 }
-                if (match.getRound() == 2){
-                    out2.writeObject(question2cat1);
-                    out2.flush();
-                    while(in2.readObject() == null){}
-                    PlayerResult playerResult = (PlayerResult) in2.readObject();
-                    if (playerResult.isResult()){
-                        if (playerResult.getName().equals("Player 1")){
-                            match.gainPoint(1);
-                        }
-                        if (playerResult.getName().equals("Player 2")){
-                            match.gainPoint(2);
-                        }
-                    }
-                    match.endRound();
+                if (match.getRound() == 2) {
+                    sendAndReceive(out2, in2, question2cat1, match);
                 }
-                if (match.getRound() == 1){
-                    out2.writeObject(question1cat1);
-                    out2.flush();
-                    while(in2.readObject() == null){}
-                    PlayerResult playerResult = (PlayerResult) in2.readObject();
-                    if (playerResult.isResult()){
-                        if (playerResult.getName().equals("Player 1")){
-                            match.gainPoint(1);
-                        }
-                        if (playerResult.getName().equals("Player 2")){
-                            match.gainPoint(2);
-                        }
-                    }
-                    match.endRound();
-                }
-                for (PrintWriter writer : multiWriter.getWriters()) {
-                    //writer.println(input);
+                if (match.getRound() == 1) {
+                    sendAndReceive(out2, in2, question1cat1, match);
                 }
             }
 
@@ -120,6 +65,21 @@ public class ClientHandler extends Thread{
             e.printStackTrace();
         }
 
+    }
+
+    private void sendAndReceive(ObjectOutputStream out2, ObjectInputStream in2, QuizQuestion question1cat2, Match match) throws IOException, ClassNotFoundException {
+        out2.writeObject(question1cat2);
+        out2.flush();
+        PlayerResult playerResult = (PlayerResult) in2.readObject();
+        if (playerResult.isResult()){
+            if (playerResult.getName().equals("Player 1")){
+                match.gainPoint(1);
+            }
+            if (playerResult.getName().equals("Player 2")){
+                match.gainPoint(2);
+            }
+        }
+        match.endRound();
     }
 
 }
