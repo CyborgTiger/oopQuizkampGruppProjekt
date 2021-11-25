@@ -8,7 +8,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Server {
-
     private static MultiWriter multiWriter = new MultiWriter();
 
     public static void main(String[] args) throws IOException {
