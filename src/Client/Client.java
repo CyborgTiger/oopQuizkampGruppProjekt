@@ -64,7 +64,7 @@ public class Client extends JFrame implements ActionListener {
 
         String hostName = "127.0.0.1";  //localhost
         int portNumber = 12345;
-        
+
 
         try {
             Socket socket = new Socket(hostName, portNumber);
